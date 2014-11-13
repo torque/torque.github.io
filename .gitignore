@@ -1,0 +1,9 @@
+# Personal storage.
+notReady
+
+# Locally installed node modules.
+node_modules
+
+# Local build directory.
+build
+

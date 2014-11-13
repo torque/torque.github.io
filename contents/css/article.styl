@@ -1,0 +1,103 @@
+@import 'colors.styl'
+
+.footnotemagic
+	position absolute
+	text-align justify
+	background-color gray-01
+	padding 5px 15px
+	z-index 10
+	opacity 0
+	transition opacity 0.25s
+	display none
+
+	&:hover
+		opacity 1
+
+.article
+	margin 1em 0 1em
+
+	table
+		border-collapse: collapse;
+		margin 1.6em 0
+
+		th, td
+			padding 0.25em 0.5em
+			border 1px solid gray-02
+
+	pre
+		display block
+		line-height 1.1
+		font-size 90%
+		overflow auto
+		background-color background + #070707
+		margin-bottom 1.8em
+		padding 1em
+
+		code
+			font-family 'Menlo', monospace
+			font-size 100%
+
+		p
+			padding 0.1em 0.3em 0.2em
+			border-radius 0.3em
+			position relative
+			top -0.15em
+			white-space nowrap
+
+
+	.title
+		font-style italic
+		text-align center
+		font-weight 400
+		// font-size 140%
+
+	.date
+		text-align center
+		font-size 0.8em
+		margin-top -0.7em
+
+		span
+			background-color background
+			padding 0 0.7em
+
+	blockquote
+		margin 1.2em 3em
+		padding-left 1em
+		font-style italic
+
+	&.intro
+		.content
+			p
+				display inline
+
+		.more
+			text-decoration underline
+			font-weight 700
+			padding-left 0.3em
+
+	.content
+		text-align justify
+
+		img
+			display block
+			margin auto
+
+		a
+			color bBlue
+			text-decoration none
+
+			&:hover
+				text-decoration underline
+
+		.footnote
+			position relative
+			top -0.5em
+			font-size 80%
+			color bRed
+
+		.footnotes
+			ol li:target
+				color: bOrange
+
+			.reversefootnote
+				color bRed

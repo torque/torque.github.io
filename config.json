@@ -1,0 +1,27 @@
+{
+  "locals": {
+    "url": "http://localhost:8080",
+    "name": "Incremental Evolution",
+    "owner": "torque",
+    "description": ""
+  },
+  "plugins": [
+    "./plugins/paginator.coffee",
+    "./node_modules/wintersmith-pagedownextra/plugin.coffee",
+    "./node_modules/wintersmith-stylus",
+    "./node_modules/wintersmith-coffee"
+  ],
+  "require": {
+    "moment": "moment",
+    "_": "underscore"
+  },
+  "jade": {
+    "pretty": true
+  },
+  "paginator": {
+    "perPage": 3
+  },
+  "pagedownextra": {
+    "extensions": ["fenced_code_gfm", "tables", "def_list", "attr_list", "footnotes", "smartypants", "strikethrough"]
+  }
+}

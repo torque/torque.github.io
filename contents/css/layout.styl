@@ -1,0 +1,171 @@
+@import 'colors.styl'
+
+h1, h2, h3, h4, h5, h6, p, body, a, img, ul, ol, blockquote, pre
+	margin 0
+	padding 0
+	border 0
+
+html, body
+	height 100%
+	margin 0
+	padding 0
+
+body
+	font-family serif
+	font-size 1.5em
+	line-height 1.52
+	background-color background
+	text-rendering optimizeLegibility
+
+.content-wrap
+	width 900px
+	margin 0 auto
+
+body
+	color foreground
+
+a
+	text-decoration none
+	color bBlue
+
+	&:hover
+		color bBlue
+		text-decoration underline
+
+p
+	margin-bottom 1.52em
+
+h1
+	font-size 160%
+	margin-bottom 1em
+
+h2
+	font-size 140%
+	font-weight 400
+	line-height 1.43
+	margin-bottom 1.35em
+
+h3
+	font-style italic
+	text-align center
+	font-weight 400
+	font-size 120%
+	margin-top 1.8em
+	margin-bottom 0.8em
+
+ol, ul
+	margin 0 1.4em 1.4em 4em
+
+li
+	margin-bottom 0.5em
+
+hr
+	border 0
+	border-top 1px solid gray-01
+	height 0
+	margin 1.6em 0
+
+header
+	padding 0
+	text-shadow 1px 1px gray-02
+	font-variant small-caps
+
+	a, a:hover
+		color foreground
+		text-decoration none
+
+	h1
+		padding-top 0.5em
+		font-size 1.5em
+		text-align center
+		font-weight 700
+		margin 0
+		color bGreen
+
+	.description
+		font-size 1.2em
+		font-style italic
+		text-align center
+		margin-top -0.3em
+
+footer
+	height 5em
+	text-align center
+
+	.about
+		font-size 90%
+
+	.poweredby
+		color gray-03
+		font-size 50%
+
+.push
+	height 4em
+
+.body-wrap
+	min-height 100%
+	height auto !important
+	height 100%
+	margin 0 auto -5em
+
+.more, .date
+	font-family serif
+	font-variant small-caps
+	text-transform lowercase
+	font-weight 400
+	text-rendering auto
+	letter-spacing 1px
+
+.smallcaps
+	font-variant small-caps
+	color foreground
+
+@media (min-width: 1600px)
+	body
+		font-size 26px
+
+@media (max-width: 940px)
+	body
+		font-size 1.2em
+
+	.content-wrap
+		width auto
+		margin 0 20px
+
+@media (max-width: 690px)
+	.content-wrap
+		width auto
+		margin 0 20px
+
+		h1
+			font-size 160%
+			margin-bottom 0.6em
+
+		.description
+			font-size 1em
+
+	.index
+		width 80%
+		margin 0 auto
+
+		*
+			float none !important
+			line-height 1.6 !important
+			width auto !important
+			height auto !important
+			text-align left !important
+			border 0 !important
+			margin 0 !important
+
+	footer
+
+		.about
+			padding 0
+			font-size 90%
+			-webkit-column-count 1
+			-moz-column-count 1
+			-ms-column-count 1
+			column-count 1
+
+			p
+				margin-bottom 1em
