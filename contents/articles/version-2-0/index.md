@@ -8,9 +8,9 @@ useMathJax: true
 
 Well, it's been a while.
 
-Two years, actually, and I've decided to resurrect one of the corpses in
-my closet. It's not perfect, but I'd like to delude myself into thinking
-that it's better than its previous iteration.
+Two years, actually, if you round up. I've decided to resurrect one of
+the corpses in my closet. It's not perfect, but I'd like to delude
+myself into thinking that it's better than its previous iteration.
 
 After all, look at these flippin' fabulous features for, uh, formatting!
 
@@ -20,7 +20,7 @@ We have code blocks with decent syntax highlighting:
 #include <stdio.h>
 
 // This is stupid.
-int main( char **argv, int argc ) {
+int main( int argc, char **argv ) {
 	for ( int i = 0; i < 1000000; ++i ) {
 		puts( "This is stupid." );
 	}
