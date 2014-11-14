@@ -1,7 +1,10 @@
 {
   "dependencies": {
     "moment": "2.3.x",
-    "underscore": "1.4.x"
+    "underscore": "1.4.x",
+    "wintersmith-coffee":"0.2.x",
+    "wintersmith-stylus":"0.4.x",
+    "wintersmith-pagedownextra":"torque/wintersmith-pagedownextra"
   },
   "repository": "none"
 }
