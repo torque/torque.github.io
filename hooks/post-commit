@@ -1,0 +1,51 @@
+#!/bin/sh
+
+# Check for a specific environment variable to determine if the site
+# should be built.
+if [ -n "$BUILD" ]; then
+	# Check that the commit is happening on the source branch.
+	if [ `git symbolic-ref --short HEAD` == "source" ]; then
+		# Make sure we are in the root directory of the repository
+		pushd "$(git rev-parse --show-toplevel)"
+		# Kill build directory if it is lingering around.
+		rm -rf build
+		# A really, really ugly kludge to keep node_modules from
+		# getting stashed.
+		mv node_modules .git/.build.node_modules
+		# Stash everything to keep untracked files safe.
+		git stash save -a
+		# Move the node modules back in.
+		mv .git/.build.node_modules node_modules
+		# Nuke the existing master branch.
+		git branch -D master
+		# Create a new orphan master.
+		git checkout --orphan master
+		# Remove all staged files.
+		git rm --cached \*
+		# Build the site.
+		wintersmith build
+		# Save node_modules from impending deletion.
+		mv node_modules .git/.build.node_modules
+		# Nuke all of the things that aren't build or the git repo.
+		find . -maxdepth 1 -not -name "build" -not -name ".git" -not -name "." -exec rm -rf \{\} \;
+		# Move the contents of "build" into the base directory. Unsafe if
+		# build/build exists, so don't do that.
+		mv build/* . 
+		rm -r build
+		# Stage all files.
+		git add .
+		# Initial commit.
+		git commit -m "Rebuild site."
+		# Jump back to the branch we came from.
+		git checkout source
+		# Remove anything left lying around. In theory, there won't be
+		# anything.
+		git clean -fdx
+		# Unstash the local changes.
+		git stash pop
+		# node_modules, we didn't forget you!
+		mv .git/.build.node_modules node_modules
+		# Revert to whichever directory we were in before.
+		popd
+	fi
+fi
