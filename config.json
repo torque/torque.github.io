@@ -1,6 +1,6 @@
 {
   "locals": {
-    "url": "http://localhost:8080",
+    "url": "https://torque.github.io",
     "name": "Incremental Evolution",
     "owner": "torque",
     "description": ""
