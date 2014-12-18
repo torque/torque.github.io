@@ -30,10 +30,9 @@ class FootnoteBubble
 		@nib.className = 'nib'
 		@element.appendChild @nib
 
-		@shown = true
+		@shown = false
 		document.querySelector( 'article.article' ).appendChild @element
 		@reflow articleBounds
-		@shown = false
 
 		@footnote.onclick = @toggleState
 
