@@ -1,20 +1,63 @@
 @import 'colors.styl'
 
-.footnotemagic
+animation( )
+	-webkit-animation arguments
+	-moz-animation arguments
+	-ms-animation arguments
+	animation arguments
+
+transform( )
+	-webkit-transform arguments
+	-moz-transform arguments
+	-ms-transform arguments
+	transform arguments
+
+@keyframes fadeIn
+	0%
+		opacity 0
+		transform translateY(10px)
+	100%
+		opacity 1
+		transform translateY(0px)
+
+@keyframes fadeOut
+	0%
+		opacity 1
+		transform translateY(0px)
+	100%
+		opacity 0
+		transform translateY(10px)
+
+.footnoteMagic
 	position absolute
 	text-align justify
-	background-color gray-01
-	padding 5px 15px
+	background-color gray-01 + #070707
+	padding 0.15em 0.5em
 	z-index 10
-	opacity 0
-	transition opacity 0.25s
-	display none
 
-	&:hover
-		opacity 1
+	.nib
+		position absolute
+		bottom 100%
+		left 50%
+		border solid transparent
+		border-bottom-color gray-01 + #070707
+		border-width 10px
+		margin-left -10px
+
+	&.invisible
+		transform scaleY(0)
+
+	&.incoming
+		animation fadeIn 0.25s
+		display block
+
+	&.outgoing
+		animation fadeOut 0.25s
+		transform scaleY(0)
 
 .article
 	margin 1em 0 1em
+	position relative
 
 	table
 		border-collapse: collapse;
@@ -92,6 +135,7 @@
 			top -0.5em
 			font-size 80%
 			color bRed
+			z-index 11
 
 		.footnotes
 			ol li:target
