@@ -35,6 +35,10 @@ a
 p
 	margin-bottom 1.52em
 
+	code
+		padding 0.1em 0.2em
+		background-color background + #070707
+
 h1
 	font-size 160%
 	margin-bottom 1em
@@ -43,15 +47,15 @@ h2
 	font-size 140%
 	font-weight 400
 	line-height 1.43
-	margin-bottom 1.35em
+	margin-bottom 1em
 
 h3
 	font-style italic
 	text-align center
 	font-weight 400
 	font-size 120%
-	margin-top 1.8em
-	margin-bottom 0.8em
+	margin-top 1em
+	margin-bottom 1em
 
 ol, ul
 	margin 0 1.4em 1.4em 4em
@@ -103,6 +107,8 @@ footer
 	height 4em
 
 .body-wrap
+	z-index 3
+	background-color background
 	min-height 100%
 	height auto !important
 	height 100%
@@ -111,7 +117,6 @@ footer
 .more, .date
 	font-family serif
 	font-variant small-caps
-	text-transform lowercase
 	font-weight 400
 	text-rendering auto
 	letter-spacing 1px
@@ -156,6 +161,9 @@ footer
 			text-align left !important
 			border 0 !important
 			margin 0 !important
+
+		ul li a
+			color bBlue
 
 	footer
 
