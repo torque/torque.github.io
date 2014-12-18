@@ -12,6 +12,7 @@ block prepend title
 block content
 	article.article
 		h2.title!= page.title
+		h3.date!= moment(page.date).format( '[Published] MMMM Do, YYYY [<span class="smallcaps">at</span>] HH:mm:ss' )
 		section.content!= page.html
 
 block prepend footer
