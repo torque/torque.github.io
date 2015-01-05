@@ -22,6 +22,7 @@
     "perPage": 3
   },
   "pagedownextra": {
-    "extensions": ["fenced_code_gfm", "tables", "def_list", "attr_list", "footnotes", "smartypants", "strikethrough"]
+    "extensions": ["fenced_code_gfm", "tables", "def_list", "attr_list", "footnotes", "smartypants", "strikethrough"],
+    "addLineNumbers": true
   }
 }

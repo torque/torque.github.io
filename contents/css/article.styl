@@ -58,6 +58,9 @@ transform( )
 .article
 	margin 1em 0 1em
 	position relative
+	-webkit-hyphens auto
+	   -moz-hyphens auto
+	        hyphens auto
 
 	table
 		border-collapse: collapse;
@@ -68,17 +71,30 @@ transform( )
 			border 1px solid gray-02
 
 	pre
-		display block
-		line-height 1.1
 		font-size 90%
-		overflow auto
 		background-color background + #070707
+		padding 0
 		margin-bottom 1.8em
-		padding 1em
+
+		code, .line-number
+			font-family 'Menlo', monospace
+			display block
+			padding 0.5em 0.5em
+			line-height 1.1
 
 		code
-			font-family 'Menlo', monospace
-			font-size 100%
+			overflow-wrap normal
+			overflow auto
+			padding 0.5em
+
+		.line-number
+			float left
+			text-align right
+			background-color background + #0D0D0D
+
+			span
+				color gray-03
+				padding 0
 
 		p
 			padding 0.1em 0.3em 0.2em

@@ -80,8 +80,8 @@ guns.
 
 The big guns, as it were, consist of [Hopper][hopper], a
 disassembler/decompiler for OS X. It is sold for the bargain basement
-price of 90 USD, which may sound like a lot until you consider that the
-heavy hitter in the disassembly field, [IDA][ida], starts at 450 USD,
+price of $90, which may sound like a lot until you consider that the
+heavy hitter in the disassembly field, [IDA][ida], starts at $450,
 and that's for the basic version[^hexrays].
 
 There is a free demo version of Hopper available that is
