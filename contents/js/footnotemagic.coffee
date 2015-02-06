@@ -75,9 +75,11 @@ class FootnoteBubble
 
 	toggleState: ( ev ) =>
 		if @shown
+			ev.target.style['z-index'] = 9
 			@element.className = 'footnoteMagic outgoing'
 			@shown = false
 		else
+			ev.target.style['z-index'] = 11
 			@element.className = 'footnoteMagic incoming'
 			@shown = true
 
