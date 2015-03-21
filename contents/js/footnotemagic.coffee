@@ -5,7 +5,7 @@
 
 # Benefits:
 # - Coffeescript
-# - CSS transitions
+# - CSS transitions and positioning
 # - No jquery or similar needed
 # - Generate all elements in constructor
 # - This sweet list of benefits
@@ -18,34 +18,31 @@
 # - Probably worth it?
 
 class FootnoteBubble
-	constructor: ( @footnote, @maxWidth, articleBounds ) ->
-		@currentMax = @maxWidth
-		footnoteId = @footnote.href.match(/^.+?#(.*)/)[1]
+	constructor: ( @footnote, @maxWidth ) ->
+		@currentMax  = @maxWidth
+		footnoteId   = @footnote.href.match(/^.+?#(.*)/)[1]
 		footnoteText = document.getElementById(footnoteId).innerHTML
 
-		@element = document.createElement 'div'
-		@element.innerHTML = footnoteText
-		@element.removeChild @element.querySelector 'a.reversefootnote'
+		@node = document.createElement 'div'
+		@node.innerHTML = footnoteText
+		@node.removeChild @node.querySelector 'a.reversefootnote'
 		@nib = document.createElement 'div'
 		@nib.className = 'nib'
-		@element.appendChild @nib
+		@node.appendChild @nib
 
 		@shown = false
-		document.querySelector( 'article.article' ).appendChild @element
-		@reflow articleBounds
-
-		@footnote.onclick = @toggleState
+		@footnote.addEventListener 'click', @toggleState, no
 
 	reflow: ( articleBounds ) ->
 		unless @shown
-			@element.className = 'footnoteMagic'
+			@node.className = 'footnoteMagic'
 
-		@element.style.top = ''
-		@element.style.left = ''
-		@element.style['max-width'] = Math.min( @maxWidth, articleBounds.width ) + 'px'
-		@width = @element.getBoundingClientRect( ).width
+		@node.style.top = ''
+		@node.style.left = ''
+		@node.style['max-width'] = Math.min( @maxWidth, articleBounds.width ) + 'px'
+		@width = @node.getBoundingClientRect( ).width
 		unless @shown
-			@element.className = 'footnoteMagic invisible'
+			@node.className = 'footnoteMagic invisible'
 		@calculateEdges articleBounds
 
 	calculateEdges: ( articleBounds ) ->
@@ -54,7 +51,7 @@ class FootnoteBubble
 		hOffset = anchorPosition.left + anchorPosition.width/2 - articleBounds.left
 		vOffset = anchorPosition.top + anchorPosition.height - articleBounds.top
 
-		left = hOffset - @width/2
+		left  = hOffset - @width/2
 		right = left + @width
 		shift = 0
 
@@ -70,45 +67,50 @@ class FootnoteBubble
 		else
 			@nib.style.left = '50%'
 
-		@element.style.top = vOffset + 0.5*Number(getComputedStyle(@element, "").fontSize.match(/(\d*(\.\d*)?)px/)[1]) + 'px'
-		@element.style.left = left + 'px'
+		@node.style.top  = vOffset + 0.5*Number( getComputedStyle( @node, "" ).fontSize.match( /(\d*(\.\d*)?)px/ )[1] ) + 'px'
+		@node.style.left = left + 'px'
 
 	toggleState: ( ev ) =>
 		if @shown
 			ev.target.style['z-index'] = 9
-			@element.className = 'footnoteMagic outgoing'
+			@node.className = 'footnoteMagic outgoing'
 			@shown = false
 		else
 			ev.target.style['z-index'] = 11
-			@element.className = 'footnoteMagic incoming'
+			@node.className = 'footnoteMagic incoming'
 			@shown = true
 
-		return false
+		ev.preventDefault( )
 
-class FootnoteMagic
-	constructor: ( maxWidth ) ->
-		@bubbles = []
+FootnoteMagic = ( maxWidth ) ->
+	footnotes     = document.querySelectorAll 'a.footnote'
+	articleNode   = document.querySelector 'article.article'
+	articleBounds = articleNode.getBoundingClientRect( )
+	fragment      = document.createDocumentFragment( )
+	bubbles       = []
+	for footnote in footnotes
+		footNode = new FootnoteBubble footnote, maxWidth
+		fragment.appendChild footNode.node
+		bubbles.push footNode
 
-		footnotes = document.querySelectorAll "a.footnote"
-		articleBounds = document.querySelector('article.article').getBoundingClientRect( )
-		for footnote in footnotes
-			@bubbles.push new FootnoteBubble footnote, maxWidth, articleBounds
+	articleNode.appendChild fragment
 
-		window.MathJax?.Hub.Register.StartupHook 'End', =>
-			@reflowBubbles( )
-
-		@oldResizeCb = window.onresize
-
-		window.onresize = @reflowBubbles
-
-	reflowBubbles: =>
-		clearTimeout @reflowTimer
-		@reflowTimer = setTimeout =>
-			articleBounds = document.querySelector('article.article').getBoundingClientRect( )
-			for bubble in @bubbles
-				bubble.reflow articleBounds
-		, 100
+	oldResizeCb   = window.onresize
+	reflowBubbles = ->
+		articleBounds = articleNode.getBoundingClientRect( )
+		for bubble in bubbles
+			bubble.reflow articleBounds
 
 		oldResizeCb?( )
 
-new FootnoteMagic 700
+	window.onresize = reflowBubbles
+
+	# if mathjax was loaded, reflow when it finishes, otherwise reflow
+	# immediately.
+	if (mj = window.MathJax)?
+		mj.Hub.Register.StartupHook 'End', ->
+			reflowBubbles( )
+	else
+		reflowBubbles( )
+
+FootnoteMagic 700
