@@ -198,9 +198,12 @@ guy[^anditdumb].
 At this point, I decided to build XLD from source and discovered that my
 build would crash when trying to run LogChecker. Some investigation of
 the strings lying around in the uncompressed blob indicated a reference
-to `dsa_pub.pem`, the public key file shipped with XLD. I thought
-perhaps the plug-in checked this key to verify an official build, but
-adding this key to my build didn't fix the crash.
+to `dsa_pub.pem`, the public key file shipped with XLD. I suspect
+LogChecker verifies that XLD was signed using this key, though I didn't
+go out of my way to try to confirm this. This check makes sense to me
+because performing it would act as another security measure by
+preventing LogChecker from working with any XLD build besides the
+"official" one.
 
 It turns out that at least part of the reason XLD (and the LogChecker
 bundle) are built only 32-bit is that 64-bit executables on OS X have
@@ -478,7 +481,7 @@ To close things out, we loop over the dictionary, tell LogChecker to
 append its signature, and write the signed files to disk.
 
 A very basic proof-of-concept, but it works, and the only side-effect is
-that it creates an unusable entry int the encoder configuration dropdown
+that it creates an unusable entry in the encoder configuration dropdown
 menu. That's a small price to pay, in my opinion.
 
 ### The Moral of the Story
