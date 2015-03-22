@@ -18,12 +18,13 @@
 # - Probably worth it?
 
 class FootnoteBubble
-	constructor: ( @footnote, @maxWidth ) ->
+	constructor: ( @footnote, @maxWidth, @articleNode ) ->
 		@currentMax  = @maxWidth
 		footnoteId   = @footnote.href.match(/^.+?#(.*)/)[1]
 		footnoteText = document.getElementById(footnoteId).innerHTML
 
 		@node = document.createElement 'div'
+		@node.className = 'footnoteMagic invisible'
 		@node.innerHTML = footnoteText
 		@node.removeChild @node.querySelector 'a.reversefootnote'
 		@nib = document.createElement 'div'
@@ -34,15 +35,10 @@ class FootnoteBubble
 		@footnote.addEventListener 'click', @toggleState, no
 
 	reflow: ( articleBounds ) ->
-		unless @shown
-			@node.className = 'footnoteMagic'
-
 		@node.style.top = ''
 		@node.style.left = ''
 		@node.style['max-width'] = Math.min( @maxWidth, articleBounds.width ) + 'px'
 		@width = @node.getBoundingClientRect( ).width
-		unless @shown
-			@node.className = 'footnoteMagic invisible'
 		@calculateEdges articleBounds
 
 	calculateEdges: ( articleBounds ) ->
@@ -79,6 +75,10 @@ class FootnoteBubble
 			ev.target.style['z-index'] = 11
 			@node.className = 'footnoteMagic incoming'
 			@shown = true
+			# make sure bubble is positioned correctly
+			if @needsReflow
+				@reflow @articleNode.getBoundingClientRect( )
+				@needsReflow = false
 
 		ev.preventDefault( )
 
@@ -89,7 +89,8 @@ FootnoteMagic = ( maxWidth ) ->
 	fragment      = document.createDocumentFragment( )
 	bubbles       = []
 	for footnote in footnotes
-		footNode = new FootnoteBubble footnote, maxWidth
+		footNode = new FootnoteBubble footnote, maxWidth, articleNode
+		footNode.needsReflow = true
 		fragment.appendChild footNode.node
 		bubbles.push footNode
 
@@ -99,18 +100,18 @@ FootnoteMagic = ( maxWidth ) ->
 	reflowBubbles = ->
 		articleBounds = articleNode.getBoundingClientRect( )
 		for bubble in bubbles
-			bubble.reflow articleBounds
+			if bubble.shown
+				bubble.reflow articleBounds
+			else unless bubble.needsReflow
+				bubble.needsReflow = true
 
 		oldResizeCb?( )
 
 	window.onresize = reflowBubbles
 
-	# if mathjax was loaded, reflow when it finishes, otherwise reflow
-	# immediately.
+	# if mathjax was loaded, make sure bubbles reflow when it finishes.
 	if (mj = window.MathJax)?
 		mj.Hub.Register.StartupHook 'End', ->
 			reflowBubbles( )
-	else
-		reflowBubbles( )
 
 FootnoteMagic 700
