@@ -37,7 +37,7 @@ class FootnoteBubble
 	reflow: ( articleBounds ) ->
 		@node.style.top = ''
 		@node.style.left = ''
-		@node.style['max-width'] = Math.min( @maxWidth, articleBounds.width ) + 'px'
+		@node.style.maxWidth = Math.min( @maxWidth, articleBounds.width ) + 'px'
 		@width = @node.getBoundingClientRect( ).width
 		@calculateEdges articleBounds
 
