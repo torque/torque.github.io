@@ -21,9 +21,7 @@ block prepend footer
 	br
 
 block append scripts
-	if page.metadata.useMathJax
-		script(type="text/javascript", src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML")
-
 	script(type="text/javascript", src="/js/footnotemagic.js")
-
+	if page.metadata.useMathJax
+		script(type="text/javascript", src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML")
 
